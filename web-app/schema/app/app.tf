@@ -1,5 +1,6 @@
 locals {
   namespace = "bugfix-previewer"
+  url = "bugfix-previewer.humberd.pl"
 }
 
 resource "kubernetes_deployment" "bugfix-previewer-web" {
@@ -22,7 +23,7 @@ resource "kubernetes_deployment" "bugfix-previewer-web" {
       spec {
         container {
           name = "angular-instance"
-          image = "humberd/bugfix-previewer-web:amd64-1"
+          image = "humberd/bugfix-previewer-web:latest"
 
           port {
             container_port = 80
@@ -60,7 +61,7 @@ resource "kubernetes_ingress" "bugfix-previewer-web" {
   }
   spec {
     rule {
-      host = "bugfix-previewer.humberd.pl"
+      host = local.url
       http {
         path {
           backend {
@@ -72,7 +73,7 @@ resource "kubernetes_ingress" "bugfix-previewer-web" {
       }
     }
     tls {
-      hosts = ["bugfix-previewer.humberd.pl"]
+      hosts = [local.url]
       secret_name = "bugfix-previewer-humberd-pl-tls"
     }
   }
