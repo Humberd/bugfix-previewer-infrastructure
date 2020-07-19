@@ -2,7 +2,7 @@ apiVersion: rbac.authorization.k8s.io/v1
 kind: Role
 metadata:
   name: namespace-admin
-  namespace: notes-app
+  namespace: bugfix-previewer
 rules:
   - apiGroups: ["apps"] # "" indicates the core API group
     resources: ["deployments"]
@@ -14,12 +14,12 @@ apiVersion: rbac.authorization.k8s.io/v1
 kind: RoleBinding
 metadata:
   name: azure-devops:namespace-admin
-  namespace: notes-app
+  namespace: bugfix-previewer
 subjects:
   # You can specify more than one "subject"
   - kind: ServiceAccount
     name: azure-devops # "name" is case sensitive
-    namespace: notes-app
+    namespace: bugfix-previewer
 roleRef:
   # "roleRef" specifies the binding to a Role / ClusterRole
   kind: Role #this must be Role or ClusterRole
