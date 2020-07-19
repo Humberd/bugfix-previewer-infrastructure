@@ -48,6 +48,11 @@ resource "kubernetes_deployment" "bugfix-previwer-server" {
     helm_release.postgres
   ]
 
+  timeouts {
+    create = "1 minute"
+    update = "1 minute"
+  }
+
   metadata {
     name = "bugfix-previewer-server"
     namespace = local.namespace

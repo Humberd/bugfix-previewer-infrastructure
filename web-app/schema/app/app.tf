@@ -4,6 +4,11 @@ locals {
 }
 
 resource "kubernetes_deployment" "bugfix-previewer-web" {
+  timeouts {
+    create = "1 minute"
+    update = "1 minute"
+  }
+
   metadata {
     name = "bugfix-previewer-web"
     namespace = local.namespace
@@ -28,6 +33,7 @@ resource "kubernetes_deployment" "bugfix-previewer-web" {
           port {
             container_port = 80
           }
+
         }
       }
     }
