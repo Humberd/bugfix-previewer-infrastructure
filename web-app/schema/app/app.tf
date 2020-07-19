@@ -5,7 +5,8 @@ locals {
 
 resource "kubernetes_deployment" "bugfix-previewer-web" {
   timeouts {
-    create = "1 minute"
+    create = "1 minutes"
+    update = "1 minutes"
   }
 
   metadata {
