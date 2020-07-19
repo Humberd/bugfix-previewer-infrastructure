@@ -67,7 +67,7 @@ resource "kubernetes_deployment" "bugfix-previwer-server" {
       spec {
         container {
           name = "kotlin-instance"
-          image = "humberd/bugfix-previewer-server:latest"
+          image = "humberd/bugfix-previewer-server:amd64-1"
 
           port {
             container_port = 8080
