@@ -43,7 +43,7 @@ resource "helm_release" "postgres" {
   }
 }
 
-resource "kubernetes_deployment" "bugfix-previwer-server" {
+resource "kubernetes_deployment" "bugfix-previewer-server" {
   depends_on = [
     helm_release.postgres
   ]
@@ -116,7 +116,7 @@ resource "kubernetes_deployment" "bugfix-previwer-server" {
 
 resource "kubernetes_service" "bugfix-previewer-server" {
   metadata {
-    name = "bugfix-previwer-server"
+    name = "bugfix-previewer-server"
     namespace = local.namespace
   }
   spec {
