@@ -49,8 +49,8 @@ resource "kubernetes_deployment" "bugfix-previwer-server" {
   ]
 
   timeouts {
-    create = "1 minute"
-    update = "1 minute"
+    create = "1m"
+    update = "1m"
   }
 
   metadata {
