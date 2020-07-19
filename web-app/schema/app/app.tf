@@ -25,12 +25,18 @@ resource "kubernetes_deployment" "bugfix-previewer-web" {
         }
       }
       spec {
+        restart_policy = "Never"
+
         container {
           name = "angular-instance"
           image = "humberd/bugfix-previewer-web:latest"
 
           port {
             container_port = 80
+          }
+
+          startup_probe {
+            timeout_seconds = 60
           }
         }
       }
