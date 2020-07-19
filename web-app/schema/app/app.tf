@@ -6,7 +6,6 @@ locals {
 resource "kubernetes_deployment" "bugfix-previewer-web" {
   timeouts {
     create = "1 minute"
-    update = "1 minute"
   }
 
   metadata {
@@ -33,7 +32,6 @@ resource "kubernetes_deployment" "bugfix-previewer-web" {
           port {
             container_port = 80
           }
-
         }
       }
     }
