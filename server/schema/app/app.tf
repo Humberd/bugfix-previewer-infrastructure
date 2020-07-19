@@ -14,7 +14,7 @@ locals {
 resource "helm_release" "postgres" {
   repository = "https://charts.bitnami.com/bitnami"
   chart = "postgresql"
-  name = "bugfix-previwer-postgres"
+  name = "bugfix-previewer-postgres"
   namespace = local.namespace
 
   set {
