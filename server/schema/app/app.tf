@@ -7,12 +7,14 @@ locals {
     postgres_db = "bugfix-previewer"
     postgres_url = "bugfix-previewer-postgres-postgresql:5432"
   }
+
+  url = "api.bugfix-previewer.humberd.pl"
 }
 
 resource "helm_release" "postgres" {
   repository = "https://charts.bitnami.com/bitnami"
   chart = "postgresql"
-  name = "notes-app-postgres"
+  name = "bugfix-previwer-postgres"
   namespace = local.namespace
 
   set {
@@ -92,7 +94,7 @@ resource "kubernetes_deployment" "bugfix-previwer-server" {
           }
 
           env {
-            name = "AWS_ACCESS_KEY_ID",
+            name = "AWS_ACCESS_KEY_ID"
             value = var.aws_access_key_id
           }
 
@@ -107,14 +109,14 @@ resource "kubernetes_deployment" "bugfix-previwer-server" {
   }
 }
 
-resource "kubernetes_service" "notes-app-server" {
+resource "kubernetes_service" "bugfix-previewer-server" {
   metadata {
-    name = "notes-app-server"
+    name = "bugfix-previwer-server"
     namespace = local.namespace
   }
   spec {
     selector = {
-      type = "notes-app-server-instance"
+      type = "bugfix-previewer-server-instance"
     }
     port {
       port = 8080
@@ -122,9 +124,9 @@ resource "kubernetes_service" "notes-app-server" {
   }
 }
 
-resource "kubernetes_ingress" "notes-app-server" {
+resource "kubernetes_ingress" "bugfix-previewer-server" {
   metadata {
-    name = "notes-app-server-ingress"
+    name = "bugfix-previewer-server-ingress"
     namespace = local.namespace
     annotations = {
       "kubernetes.io/ingress.class" = "traefik"
@@ -134,11 +136,11 @@ resource "kubernetes_ingress" "notes-app-server" {
   }
   spec {
     rule {
-      host = "api.notes-app.humberd.pl"
+      host = local.url
       http {
         path {
           backend {
-            service_name = "notes-app-server"
+            service_name = "bugfix-previewer-server"
             service_port = 8080
           }
           path = "/"
@@ -146,8 +148,8 @@ resource "kubernetes_ingress" "notes-app-server" {
       }
     }
     tls {
-      hosts = ["api.notes-app.humberd.pl"]
-      secret_name = "api-notes-app-humberd-pl-tls"
+      hosts = [local.url]
+      secret_name = "api-bugfix-previewer-humberd-pl-tls"
     }
   }
 }
